@@ -3,6 +3,8 @@ const express = require('express');
 const connectDB = require('./config/db');
 const mockAuth = require('./middleware/mockAuth');
 
+const articleRoutes = require('./routes/article.routes');
+
 const app = express();
 
 // Connect to database
@@ -12,6 +14,8 @@ connectDB();
 app.use(express.json());
 
 app.use(mockAuth);
+
+app.use('/articles', articleRoutes);
 
 //test route
 app.get('/', (req, res) => {
