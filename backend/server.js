@@ -1,6 +1,7 @@
 require ('dotenv').config();
 const express = require('express');
 const connectDB = require('./config/db');
+const mockAuth = require('./middleware/mockAuth');
 
 const app = express();
 
@@ -10,9 +11,16 @@ connectDB();
 // Middleware to parse JSON
 app.use(express.json());
 
+app.use(mockAuth);
+
 //test route
 app.get('/', (req, res) => {
-  res.send('API is running...');
+  res.json(req.user);
+});
+
+const authorize= require('./middleware/authorize');
+app.get('/protected', authorize('create_article'), (req, res) => {
+  res.send(`Hello ${req.user.fullname}, you have accessed a protected route!`);
 });
 
 const PORT = process.env.PORT || 5000;
