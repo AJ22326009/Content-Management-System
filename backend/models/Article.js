@@ -19,7 +19,7 @@ const articleShema= new mongoose.Schema(
             default: false
         },
         author:{
-            type: String,
+            type: mongoose.Schema.Types.ObjectId,
             ref: 'User',
             required: true
         }
@@ -27,4 +27,4 @@ const articleShema= new mongoose.Schema(
     {timestamps: true}
 )
 
-module.exports = mongoose.Schema('Article', articleShema)
+module.exports = mongoose.model('Article', articleShema)
