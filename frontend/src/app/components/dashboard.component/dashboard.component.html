@@ -1,1 +1,58 @@
-<p>dashboard.component works!</p>
+<div style="min-height: 510.4px;">
+    <!-- Content Header (Page header) -->
+    <div class="content-header container-fluid m-3">
+        <h1 class="m-0">Welcome <span>Person's Name</span> to Dashboard</h1>
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+        <div class="row">
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-info">
+              <div class="inner">
+                <h3>150</h3>
+
+                <p>Total Articles</p>
+              </div>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-success">
+              <div class="inner">
+                <h3>53<sup style="font-size: 20px">%</sup></h3>
+
+                <p>Published Articles</p>
+              </div>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg-warning">
+              <div class="inner">
+                <h3>44</h3>
+
+                <p>Draft Articles</p>
+              </div>
+            </div>
+          </div>
+          <!-- ./col -->
+          <div class="col-lg-3 col-6">
+            <!-- small box -->
+            <div class="small-box bg d-flex flex-column align-items-center">
+              <a routerLink="/articles" class="btn btn-primary m-2">View Articles</a>
+              <a routerLink="/articles/create" class="btn btn-primary m-2">Create Article</a>
+            </div>
+          </div>
+          <!-- ./col -->
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+    <!-- /.content -->
+  </div>
