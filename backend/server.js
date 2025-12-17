@@ -15,7 +15,7 @@ app.use(express.json());
 
 app.use(mockAuth);
 
-app.use('/articles', articleRoutes);
+app.use('api/articles', articleRoutes);
 
 //test route
 app.get('/', (req, res) => {
