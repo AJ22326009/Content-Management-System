@@ -6,6 +6,7 @@ import { LoginComponent } from './components/auth/login.component/login.componen
 import { UnauthorizedComponent } from './components/auth/unauthorized.component/unauthorized.component';
 import { CreateArticleComponent } from './components/articles/create-article.component/create-article.component';
 import { DashboardComponent } from './components/dashboard.component/dashboard.component';
+import { AccessMatrixComponent } from './components/access-matrix.component/access-matrix.component';
 
 
 export const routes: Routes = [
@@ -39,6 +40,12 @@ export const routes: Routes = [
         component: CreateArticleComponent,
         canActivate: [authGuard, permissionGuard],
         data: { permission: 'edit_article' }
+    },
+    {
+        path: 'access_matrix',
+        component: AccessMatrixComponent,
+        canActivate: [authGuard, permissionGuard],
+        data: { permission: 'access_matrix' }
     },
     {
         path: '',

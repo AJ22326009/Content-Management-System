@@ -10,9 +10,13 @@ import { AuthService } from '../../services/auth';
   styleUrl: './sidebar.component.css',
 })
 export class SidebarComponent {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(public authService: AuthService, private router: Router) {}
    logout(){
     this.authService.logout();
     this.router.navigate(['/login']);
+  }
+
+  can(permission: string): boolean {
+    return this.authService.hasPermission(permission);
   }
 }

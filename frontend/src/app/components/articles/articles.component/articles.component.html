@@ -1,37 +1,29 @@
 <div class="card-body content-wrapper">
-    <div class="d-flex align-items-stretch">
-        <div class="card bg-light d-flex flex-fill">
-            <div class="card-header text-muted border-bottom-0">
-                Article Title
-            </div>
-            <div class="card-body pt-0">
-                <div class="row">
-                    <div class="col-7">
-                        Ariticle CONTENT
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Labore voluptatibus aliquam voluptates
-                        magni deserunt, enim suscipit earum atque. Deleniti magnam illum quae dolorem officiis dolorum
-                        quia quos accusamus quod reiciendis.
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Labore voluptatibus aliquam voluptates
-                        magni deserunt, enim suscipit earum atque. Deleniti magnam illum quae dolorem officiis dolorum
-                        quia quos accusamus quod reiciendis.
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Labore voluptatibus aliquam voluptates
-                        magni deserunt, enim suscipit earum atque. Deleniti magnam illum quae dolorem officiis dolorum
-                        quia quos accusamus quod reiciendis.
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Labore voluptatibus aliquam voluptates
-                        magni deserunt, enim suscipit earum atque. Deleniti magnam illum quae dolorem officiis dolorum
-                        quia quos accusamus quod reiciendis.
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Labore voluptatibus aliquam voluptates
-                        magni deserunt, enim suscipit earum atque. Deleniti magnam illum quae dolorem officiis dolorum
-                        quia quos accusamus quod reiciendis.
-                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Labore voluptatibus aliquam voluptates
-                        magni deserunt, enim suscipit earum atque. Deleniti magnam illum quae dolorem officiis dolorum
-                        quia quos accusamus quod reiciendis.
-                    </div>
-                    <div class="col-5 text-center">
-                        <img src="CMS_LOGO.ico" alt="Article img" class="rounded-lg border-primary img-fluid" style="border: aqua 1px solid;">
+    <div class="flex align-items">
+        @for(article of articles; track article.title){
+            @if(article.published){
+            <div class="card bg-light d-flex flex-fill">
+                <div class="card-header text-muted border-bottom-0">
+                    {{ article.title }}
+                </div>
+                <div class="card-body pt-0">
+                    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+                        <div class="col-7" style="width: 100%;">
+                            {{ article.content }}
+                        </div>
+                        <div class="col-5 text-center" style="width: 50%; max-width: 250px; min-width: 200px;">
+                            <img [src]="article.imageLink" alt="Article img" class="rounded-lg border-primary img-fluid"
+                                style="border: aqua 1px solid; width: 100%;">
+                        </div>
                     </div>
                 </div>
+                @if(authService.hasPermission('edit_article')){
+                <a class="btn btn-primary m-2" style="width: 70px;">Edit</a>
+                }
             </div>
-        </div>
+            }
+            
+        }
+        
     </div>
 </div>

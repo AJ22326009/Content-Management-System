@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AuthService } from '../../services/auth';
 
 @Component({
   selector: 'app-dashboard.component',
@@ -10,4 +11,5 @@ import { RouterModule } from '@angular/router';
 })
 export class DashboardComponent {
 
+  constructor(public authService: AuthService) { }
 }

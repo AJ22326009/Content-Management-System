@@ -1,62 +1,79 @@
 <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item d-none d-sm-inline-block">
-        <a routerLink="/" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a routerLink="/articles" class="nav-link">Articles</a>
-      </li>
-    </ul>
+  <!-- Left navbar links -->
+  <ul class="navbar-nav">
+    <li class="nav-item d-none d-sm-inline-block">
+      <a routerLink="/" class="nav-link">Home</a>
+    </li>
+    @if(can('view_article')){
+    <li class="nav-item d-none d-sm-inline-block">
+      <a routerLink="/articles" class="nav-link">Articles</a>
+    </li>
+    }
+  </ul>
 
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-    </ul>
-  </nav>
+  <!-- Right navbar links -->
+  <ul class="navbar-nav ml-auto">
+    <li class="nav-item">
+      <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+    </li>
+  </ul>
+</nav>
 <aside class="main-sidebar sidebar-dark-primary elevation-4" style="position: fixed;">
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="userImgUrl" class="img-circle elevation-2" alt="User Image">
-        </div>
-        <div class="info">
-          <a href="#" class="d-block">Algasim Jallow</a>
-        </div>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+      <div class="image">
+        <img [src]="authService.getUser()?.imageUrl" class="img-circle elevation-2" alt="User Image">
       </div>
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-              <li class="nav-item">
-                <a routerLink="/" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Dashboard</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a routerLink="/articles" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Articles</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a routerLink="/articles/create" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Create Article</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" (click)="logout()">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Logout</p>
-                </a>
-              </li>
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
+      <div class="info">
+        <a href="#" class="d-block">{{ authService.getUser()?.fullname }}</a>
+      </div>
     </div>
-    <!-- /.sidebar -->
-  </aside>
+    <!-- Sidebar Menu -->
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+        <li class="nav-item">
+          <a routerLink="/" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Dashboard</p>
+          </a>
+        </li>
+        @if(can('view_article')){
+        <li class="nav-item">
+          <a routerLink="/articles" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Articles</p>
+          </a>
+        </li>
+        }
+
+        @if(can('create_article')){
+        <li class="nav-item">
+          <a routerLink="/articles/create" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Create Article</p>
+          </a>
+        </li>
+        }
+
+        @if(can('access_matrix')){
+          <li class="nav-item">
+          <a routerLink="/access_matrix" class="nav-link">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Access Matrix</p>
+          </a>
+        </li>
+        }
+
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout()" style="color: rgb(193, 85, 85); cursor: pointer;">
+            <i class="far fa-circle nav-icon"></i>
+            <p>Logout</p>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.sidebar-menu -->
+  </div>
+  <!-- /.sidebar -->
+</aside>
