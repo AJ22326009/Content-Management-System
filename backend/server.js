@@ -4,6 +4,8 @@ const connectDB = require('./config/db');
 const mockAuth = require('./middleware/mockAuth');
 
 const articleRoutes = require('./routes/article.routes');
+const permissionRoutes = require('./routes/permission.routes');
+const roleRoutes = require('./routes/role.routes');
 
 const app = express();
 
@@ -15,7 +17,9 @@ app.use(express.json());
 
 app.use(mockAuth);
 
-app.use('api/articles', articleRoutes);
+app.use('/api/articles', articleRoutes);
+app.use('/api/permissions', permissionRoutes);
+app.use('/api/roles', roleRoutes);
 
 //test route
 app.get('/', (req, res) => {

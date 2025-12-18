@@ -28,6 +28,18 @@ const mockAuth = (req, res, next) => {
              {
                 _id: new mongoose.Types.ObjectId(),
                 name: 'publish_article'
+            },
+            {
+                _id: new mongoose.Types.ObjectId(),
+                name: 'view_roles'
+            },
+            {
+                _id: new mongoose.Types.ObjectId(),
+                name: 'edit_role_permissions'
+            },
+            {
+                _id: new mongoose.Types.ObjectId(),
+                name: 'view_permissions'
             }
         ]
         }

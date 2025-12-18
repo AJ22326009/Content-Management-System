@@ -4,7 +4,7 @@ const authorize =(requiredPermission)=>{
             return res.status(401).json({message:'user not logged in'});
         }
 
-        console.log('Permissions:', req.user.role?.permissions);
+        // console.log('Permissions:', req.user.role?.permissions);
         const permissions=req.user.role?.permissions || [];
         
         const hasPermission=permissions.some(p=>p.name===requiredPermission);
