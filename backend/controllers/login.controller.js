@@ -1,0 +1,36 @@
+const User=require('../models/User');
+const bcrypt=require('bcrypt');
+const jwt=require('jsonwebtoken');
+
+const loginUser = async(req,res)=>{
+    const {email,password}=req.body;
+
+    const user=await User.findOne({email})
+    .populate({
+        path:'role',
+        populate:{path:'permissions'}
+    });
+
+    if(!user){
+        return  res.status(401).json({message:'invalid credentials'});
+    };
+
+    const isMatch=await bcrypt.compare(password,user.password);
+
+    if(!isMatch){
+        return res.status(401).json({message:'invalid credentials'});
+    }
+
+    const token=jwt.sign(
+        {
+            userId: user._id,
+            role: user.role.name,
+            permissions: user.role.permissions.map(permission => permission.name)
+        },
+        process.env.JWT_SECRET,
+        {expiresIn:'1h'}
+    )
+    res.status(200).json({token});
+}
+
+module.exports={loginUser};
