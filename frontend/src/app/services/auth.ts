@@ -12,7 +12,9 @@ export class AuthService {
     imageUrl: 'https://github.com/AJ22326009/Admin-Dashboard/blob/main/src/assets/Algasim.jpg?raw=true',
     role: {
       name: 'Manager',
-      permissions: ['create_article', 'edit_article', 'delete_article','view_article','access_matrix'],
+      permissions: ['create_article', 'edit_article', 'delete_article','view_article','access_matrix','manage_users','view_permissions',
+        'view_roles', 'edit_role_permissions','publish_article'
+      ]
     }
   }
 }
