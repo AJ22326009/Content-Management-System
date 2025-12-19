@@ -1,4 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { RoleService } from '../../services/role';
+import { PermissionService } from '../../services/permission';
+import { Role } from '../../models/role.model';
+import { Permission } from '../../models/permission.model';
+
 
 @Component({
   selector: 'app-access-matrix',
@@ -6,15 +11,39 @@ import { Component } from '@angular/core';
   templateUrl: './access-matrix.component.html',
   styleUrl: './access-matrix.component.css',
 })
-export class AccessMatrixComponent {
-  roles = [
-    { name: 'Manager', permissions: ['create_article', 'edit_article', 'delete_article','view_article','access_matrix'] },
-    { name: 'Editor', permissions: ['create_article', 'edit_article','view_article'] },
-    { name: 'Viewer', permissions: ['view_article'] },
-    { name: 'Admin', permissions: ['create_article', 'edit_article', 'delete_article','view_article','access_matrix','manage_users'] },
-  ]
+export class AccessMatrixComponent implements OnInit {
+  roles: any[] = [];
+  permissions: Permission[] = [];
+  loadingPermissions: boolean = false;
+  loadingRoles: boolean = false;
+  error: string |null = null;
 
-  hasPermission(role: any, permission: string): boolean {
-    return role.permissions.includes(permission);
+  constructor(private roleService: RoleService, private permissionService: PermissionService) {}
+
+  ngOnInit() {
+    this.loadRoles();
+    this.loadPermissions();
+    // console.log(this.roles);
+    // console.log(this.permissions);
+  }
+
+  loadRoles() {
+    this.loadingRoles = true;
+    this.roleService.getRoles().subscribe({
+      next: (data: any)=>{this.roles = data.roles; this.loadingRoles = false;},
+      error: err=>{this.error = err?.message || 'failed to load roles'; this.loadingRoles = false;}
+    });
+  }
+
+  loadPermissions() {
+    this.loadingPermissions = true;
+    this.permissionService.getPermissions().subscribe({
+      next: (data: any)=> { this.permissions = data.permissions; this.loadingPermissions = false;},
+      error: err => { this.error = err?.message || 'failed to load permissions'; this.loadingPermissions = false; }
+    });
+  }
+
+  hasPermission(role: any, permission: Permission): boolean {
+    return role.permissions.includes(permission._id);
   }
 }

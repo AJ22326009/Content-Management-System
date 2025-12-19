@@ -10,41 +10,30 @@
                     <table class="table table-hover text-nowrap">
                         <thead>
                             <tr>
-                                <th>Role</th>
-                                <th>create_article</th>
-                                <th>edit_article</th>
-                                <th>delete_article</th>
-                                <th>view_article</th>
-                                <th>access_matrix</th>
-                                <th>manage_users</th>
+                                <th>Permission</th>
+                                @for(role of roles; track role.name){
+                                    <th>{{role.name}}</th>
+                                }
                             </tr>
                         </thead>
-                        <tbody> 
-                            @for(role of roles; track role.name){
+                        <tbody>
+                            @for(permission of permissions; track permission.name){
                             <tr>
-                                <td>{{role.name}}</td>
-                                <td>
-                                    {{ hasPermission(role, 'create_article') }}
-                                </td>
-                                <td>
-                                    {{ hasPermission(role, 'edit_article') }}
-                                </td>
-                                <td>
-                                    {{ hasPermission(role, 'delete_article') }}
-                                </td>
-                                <td>
-                                    {{ hasPermission(role, 'view_article') }}
-                                </td>
-                                <td>
-                                    {{ hasPermission(role, 'access_matrix') }}
-                                </td>
-                                <td>
-                                    {{ hasPermission(role, 'manage_users') }}
-                                </td>
+                                <td>{{permission.name}}</td>
+                                @for(role of roles; track role.name){
+                                    <td>
+                                        {{ hasPermission(role, permission) ? '✔️' : '❌' }}
+                                    </td>
+                                }
                             </tr>
                         }
                         </tbody>
                     </table>
+                    @if(loadingRoles || loadingPermissions){
+                        <div class="overlay">
+                            <i class="fas fa-2x fa-sync-alt fa-spin"></i>
+                        </div>
+                    }
                 </div>
                 <!-- /.card-body -->
             </div>
