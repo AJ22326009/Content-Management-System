@@ -1,5 +1,6 @@
 require ('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const connectDB = require('./config/db');
 const mockAuth = require('./middleware/mockAuth');
 
@@ -12,6 +13,7 @@ const app = express();
 // Connect to database
 connectDB();
 
+app.use(cors());
 // Middleware to parse JSON
 app.use(express.json());
 
