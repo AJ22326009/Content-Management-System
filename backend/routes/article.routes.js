@@ -19,13 +19,13 @@ router.post('/',
 
 //get all with viewer rules inside controller
 router.get('/',
-    authorize('view_article'),
+    authorize('view_articles'),
     getAllArticles
 );
 
 //get one article
 router.get('/:id',
-    authorize('view_article'),
+    authorize('view_articles'),
     viewArticle
 );
 
