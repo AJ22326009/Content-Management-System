@@ -5,9 +5,9 @@ const authorize =(requiredPermission)=>{
         }
 
         // console.log('Permissions:', req.user.role?.permissions);
-        const permissions=req.user.role?.permissions || [];
-        
-        const hasPermission=permissions.some(p=>p.name===requiredPermission);
+        const permissions=req.user.permissions || [];
+        // console.log(req.user.permissions);  for debugging
+        const hasPermission=permissions.some(p=>p===requiredPermission);
 
         if(!hasPermission){
             return res.status(403).json({message:'forbidden: you do not have permission'});
