@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+
+  constructor(private http: HttpClient) {}
   private user: any= null
   login(){this.user = {
     fullname: 'Algasim Jallow',
@@ -31,6 +35,13 @@ export class AuthService {
   }
 
   logout(){
+    const refreshToken = localStorage.getItem('refreshToken');
+    if (refreshToken) {
+      this.http.post(environment.logoutUrl, { refreshToken }).subscribe();
+    }
+
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
     this.user = null;
   }
 }
