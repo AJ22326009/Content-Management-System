@@ -3,7 +3,8 @@ const router=express.Router();
 const authMiddleware =require('../middleware/auth');
 const { loginUser }=require('../controllers/login.controller');
 const { refreshUser }=require('../controllers/refresh.controller');
-const RefreshToken=require('../models/RefreshToken');
+const { logoutUser }=require('../controllers/logout.controller');
+
 
 router.post('/login', 
     loginUser);
@@ -11,12 +12,8 @@ router.post('/login',
 router.post('/refresh',
     refreshUser);
 
-router.post('/logout', authMiddleware, async (req, res) => {
-    const { refreshToken } = req.body;
-
-    await RefreshToken.deleteOne({token: refreshToken});
-
-    res.status(200).json({ message: 'Logged out successfully' });
-});
+router.post('/logout', 
+    authMiddleware, 
+    logoutUser);
 
 module.exports=router;
