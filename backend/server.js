@@ -8,7 +8,7 @@ const articleRoutes = require('./routes/article.routes');
 const permissionRoutes = require('./routes/permission.routes');
 const roleRoutes = require('./routes/role.routes');
 const userRoutes = require('./routes/user.routes');
-const loginRoutes = require('./routes/login.route');
+const authRoutes = require('./routes/auth.route');
 
 const app = express();
 
@@ -18,14 +18,13 @@ connectDB();
 app.use(cors());
 // Middleware to parse JSON
 app.use(express.json());
-app.use(authMiddleware);
 
 // Routes
-app.use('/api/articles', articleRoutes);
-app.use('/api/permissions', permissionRoutes);
-app.use('/api/roles', roleRoutes);
-app.use('/api/users', userRoutes);
-app.use('/api/auth', loginRoutes);
+app.use('/api/articles', authMiddleware, articleRoutes);
+app.use('/api/permissions', authMiddleware, permissionRoutes);
+app.use('/api/roles', authMiddleware, roleRoutes);
+app.use('/api/users', authMiddleware, userRoutes);
+app.use('/api/auth', authRoutes);
 
 
 //test route
