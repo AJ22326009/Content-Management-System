@@ -1,4 +1,5 @@
 const User=require('../models/User');
+const RefreshToken=require('../models/RefreshToken');
 const bcrypt=require('bcrypt');
 const jwt=require('jsonwebtoken');
 
@@ -21,16 +22,28 @@ const loginUser = async(req,res)=>{
         return res.status(401).json({message:'invalid credentials'});
     }
 
-    const token=jwt.sign(
+    const accessToken=jwt.sign(
         {
             userId: user._id,
             role: user.role.name,
             permissions: user.role.permissions.map(permission => permission.name)
         },
         process.env.JWT_SECRET,
-        {expiresIn:'1h'}
-    )
-    res.status(200).json({token});
+        {expiresIn:'15m'}
+    );
+
+    const refreshToken=jwt.sign(
+        {userId:user._id},
+        process.env.JWT_REFRESH_SECRET,
+        {expiresIn:'7d'}
+    );
+
+    await RefreshToken.create({
+        user:user._id,
+        token:refreshToken,
+        expiresAt:new Date(Date.now()+7*24*60*60*1000)
+    });
+    res.status(200).json({accessToken, refreshToken});
 }
 
 module.exports={loginUser};
