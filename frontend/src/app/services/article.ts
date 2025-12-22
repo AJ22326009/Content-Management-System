@@ -14,7 +14,7 @@ export class ArticleService {
     return this.http.get<Article[]>(environment.apiUrl);
   }
 
-  getArticleById(id: string): Observable<Article> {
+  getArticleById(id: string): Observable<any> {
     return this.http.get<Article>(`${environment.apiUrl}/${id}`);
   }
 
@@ -31,6 +31,6 @@ export class ArticleService {
   }
 
   publishArticle(id: string): Observable<Article> {
-    return this.http.patch<Article>(`${environment.apiUrl}/${id}/publish`, {});
+    return this.http.put<Article>(`${environment.apiUrl}/${id}/publish`, {});
   }
 }
