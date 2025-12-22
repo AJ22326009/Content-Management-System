@@ -29,7 +29,7 @@ export class CreateArticleComponent {
     this.articleService.createArticle(newArticle).subscribe({
       next: (res) => {
         this.success = true;
-        setTimeout(() => { this.success = false; }, 3000);
+        setTimeout(() => { this.success = false; }, 6000);
         this.title = '';
         this.body = '';
         this.imageUrl = '';
