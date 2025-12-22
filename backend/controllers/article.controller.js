@@ -51,11 +51,7 @@ const deleteArticle= async (req, res) => {
 //get all articles
 const getAllArticles= async (req, res) => {
     try {
-        const filter=req.user.role.name==='Viewer'
-        ? {isPublished:true}
-        : {};
-
-        const articles= await Article.find(filter).populate('author', 'fullname email');
+        const articles= await Article.find().populate('author', 'fullname email');
 
         res.status(200).json({articles});
     }catch (error) {
@@ -67,10 +63,12 @@ const getAllArticles= async (req, res) => {
 const publishArticle= async (req, res) => {
     try {
         const articleId=req.params.id;
-        const article= await Article.findByIdAndUpdate(articleId, {isPublished:true}, {new:true});
+        const article= await Article.findById(articleId);
         if(!article){
             return res.status(404).json({message:'article not found'});
         }
+        article.isPublished = !article.isPublished;
+        await article.save();
         res.status(200).json({message:'article published successfully', article});
     } catch (error) {
         res.status(400).json({message:'error publishing article', error:error.message});
