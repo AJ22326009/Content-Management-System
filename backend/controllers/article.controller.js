@@ -4,12 +4,12 @@ const Article= require('../models/Article');
 // Create a new article
 const createArticle= async (req, res) => {
     try {
-        const {title, body, image}=req.body;
+        const {title, body, imageUrl}=req.body;
         const article= new Article({
             title, 
             body, 
-            image,
-            author: req.user.id
+            imageUrl,
+            author: req.user.userId
         });
 
         await article.save();
