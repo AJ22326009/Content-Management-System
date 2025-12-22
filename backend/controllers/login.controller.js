@@ -24,9 +24,11 @@ const loginUser = async(req,res)=>{
 
     const accessToken=jwt.sign(
         {
+            fullname: user.fullname,
             userId: user._id,
             role: user.role.name,
-            permissions: user.role.permissions.map(permission => permission.name)
+            permissions: user.role.permissions.map(permission => permission.name),
+            imageUrl: user.imageUrl
         },
         process.env.JWT_SECRET,
         {expiresIn:'15m'}

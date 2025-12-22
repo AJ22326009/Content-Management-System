@@ -4,7 +4,7 @@ const Role=require('../models/Role');
 
 //user registration
 const registerUser=async(req,res)=>{
-    const {fullname,email,password,role,profilePhoto}=req.body;
+    const {fullname,email,password,role,imageUrl}=req.body;
 
     const hashedPassword=await bcrypt.hash(password,10);
 
@@ -18,7 +18,7 @@ const registerUser=async(req,res)=>{
         email,
         password:hashedPassword,
         role: userRole,
-        profilePhoto
+        imageUrl
     })
 
     res.status(201).json({message:'user registered successfully', userId:user._id});
