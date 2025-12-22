@@ -1,7 +1,53 @@
 <div class="card-body content-wrapper">
     <div class="flex align-items">
+        @if(authService.hasPermission('publish_article')){
+            <h3 class="" style="text-align: center; margin: 20px 0;">Published Articles</h3>
+        }
         @for(article of articles; track article.title){
             @if(article.isPublished){
+            <div class="card bg-light d-flex flex-fill" style="margin-bottom: 50px;">
+                <div class="card-header text-muted border-bottom-0">
+                    {{ article.title }}
+                </div>
+                <div class="card-body pt-0">
+                    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;">
+                        <div class="col-7" style="width: 100%;">
+                            {{ article.body }}
+                        </div>
+                        <div class="col-5 text-center" style="width: 50%; max-width: 250px; min-width: 200px;">
+                            <img [src]="article.imageUrl" alt="Article img" class="rounded-lg border-primary img-fluid"
+                                style="border: aqua 1px solid; width: 100%;">
+                        </div>
+                    </div>
+                </div>
+                <div class="flex row m-2" style="justify-content: flex-end;">
+                    @if(authService.hasPermission('edit_article')){
+                        <a class="btn btn-primary m-2" style="width: 70px; font-weight: bold;" (click)="editArticle(article._id)">Edit</a>
+                    }
+                     @if(authService.hasPermission('publish_article')){
+                        <a class="btn btn-success m-2" style="width: 100px;" (click)="togglePublish(article._id)">Unpublish</a>
+                    }
+                     @if(authService.hasPermission('delete_article')){
+                        <a class="btn btn-danger m-2" style="width: 100px;" (click)="deleteArticle(article._id)">Delete</a>
+                    }
+                </div>
+                <em style="color: rgb(58, 98, 217); margin-bottom: 0; margin-left: 10px;">Created by {{ article.author?.fullname}}</em>
+               <em class="" style="color: rgb(94, 123, 210); margin-top: 0; margin-left: 10px;">last updated {{ article.updatedAt | date:'short' }}</em>
+            </div>
+            }
+            
+        }
+
+        @if(noPublishedArticles()){
+            <div class="alert alert-info" role="alert">
+                No published articles available.
+            </div>
+        }
+        
+    @if(authService.hasPermission('publish_article')){
+        <h3 class="" style="text-align: center; margin: 20px 0;">Unpublished Articles</h3>
+         @for(article of articles; track article.title){
+            @if(!article.isPublished){
             <div class="card bg-light d-flex flex-fill">
                 <div class="card-header text-muted border-bottom-0">
                     {{ article.title }}
@@ -17,37 +63,70 @@
                         </div>
                     </div>
                 </div>
-                @if(authService.hasPermission('edit_article')){
-                <a class="btn btn-primary m-2" style="width: 70px;">Edit</a>
-                }
+                <div class="flex row m-2" style="justify-content: flex-end;">
+                    @if(authService.hasPermission('edit_article')){
+                        <a class="btn btn-primary m-2" style="width: 70px; font-weight: bold;" (click)="editArticle(article._id)">Edit</a>
+                    }
+                    @if(authService.hasPermission('publish_article')){
+                        <a class="btn btn-success m-2" style="width: 100px;" (click)="togglePublish(article._id)">Publish</a>
+                    }
+                    @if(authService.hasPermission('delete_article')){
+                        <a class="btn btn-danger m-2" style="width: 100px;" (click)="deleteArticle(article._id)">Delete</a>
+                    }
+                </div>
+               <em style="color: rgb(58, 98, 217); margin-bottom: 0; margin-left: 10px;">Created by {{ article.author?.fullname}}</em>
+               <em class="" style="color: rgb(94, 123, 210); margin-top: 0; margin-left: 10px;">last updated {{ article.updatedAt | date:'short' }}</em>
             </div>
-            }
-            
+            } 
         }
+         @if(noUnpublishedArticles()){
+            <div class="alert alert-info" role="alert">
+                No unpublished articles available.
+            </div>
+        }
+    }
 
-        @if(articles.length === 0){
+    @if(!errorLoadingArticles){
+     @if(articles.length === 0){
             <div class="alert alert-info" role="alert">
                 No articles found.
             </div>
         }
+    }
 
-        @if(loadingArticles){
+    @if(loadingArticles){
             <div class="spinner-border text-primary" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
-        }
-
-        @if(errorLoadingArticles){
+    }
+     @if(errorLoadingArticles){
             <div class="alert alert-danger" role="alert">
                 {{errorLoadingArticles}}
             </div>
         }
-
-        @if(noPublishedArticles()){
-            <div class="alert alert-info" role="alert">
-                No published articles available.
-            </div>
-        }
-        
     </div>
+
+    @if(publishMessage){
+      <div class="alert alert-success" role="alert" style="position: fixed; bottom: 20px; right: 20px;">
+        {{ publishMessage }}
+    </div>
+    }
+
+    @if(publishFailsMessage){
+      <div class="alert alert-danger" role="alert" style="position: fixed; bottom: 20px; right: 20px;">
+        {{ publishFailsMessage }}
+    </div>
+    }
+
+    @if(deleteMessage){
+      <div class="alert alert-success" role="alert" style="position: fixed; bottom: 20px; right: 20px;">
+        {{ deleteMessage }}
+      </div>
+    }
+
+    @if(deleteFailsMessage){
+      <div class="alert alert-danger" role="alert" style="position: fixed; bottom: 20px; right: 20px;">
+        {{ deleteFailsMessage }}
+      </div>
+    }
 </div>

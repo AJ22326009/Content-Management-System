@@ -4,7 +4,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Create or Edit Article</h1>
+            <h1 style="text-align: center;">{{ isEditMode ? 'EDIT ARTICLE' : 'CREATE ARTICLE' }}</h1>
           </div>
         </div>
       </div><!-- /.container-fluid -->
@@ -20,24 +20,26 @@
               </div>
               <!-- /.card-header -->
               <!-- form start -->
-              <form>
+              <form [formGroup]="articleForm" (ngSubmit)="submit()">
                 <div class="card-body">
                   <div class="form-group">
                     <label for="title">Article Title</label>
-                    <input type="text" class="form-control" [(ngModel)]="title"  name="title" id="title" placeholder="Enter title">
+                    <input type="text" class="form-control" formControlName="title" id="title" placeholder="Enter title">
                   </div>
                   <div class="form-group">
                     <label for="body">Article Content</label>
-                    <textarea class="form-control" [(ngModel)]="body" name="body" id="body" placeholder="Enter content"></textarea>
+                    <textarea class="form-control" formControlName="body" id="body" placeholder="Enter content"></textarea>
                   </div>
                     <div class="form-group">
                     <label for="imageUrl">Image</label>
-                    <input type="text" class="form-control" [(ngModel)]="imageUrl" name="imageUrl" id="imageUrl" placeholder="Enter image URL">
+                    <input type="text" class="form-control" formControlName="imageUrl" id="imageUrl" placeholder="Enter image URL">
                   </div>  
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer d-flex justify-content-center">
-                  <button type="submit" class="btn btn-primary" (click)="createArticle()">Submit</button>
+                  <button type="submit" class="btn btn-primary" [disabled]="articleForm.invalid">
+                    {{ isEditMode ? 'Update Article' : 'Create Article' }}
+                  </button>
                 </div>
               </form>
             </div>

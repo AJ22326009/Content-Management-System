@@ -1,22 +1,31 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth';
-import {Article} from '../../../models/article.model';
 import { ArticleService } from '../../../services/article';
+import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-articles.component',
-  imports: [],
+  imports: [DatePipe],
   templateUrl: './articles.component.html',
   styleUrl: './articles.component.css',
 })
 export class ArticlesComponent implements OnInit{
-  articles: Article[] = [];
+  articles: any[] = [];
   loadingArticles: boolean = false;
   errorLoadingArticles: string | null = null;
+  publishMessage: string = '';
+  publishFailsMessage: string = '';
+  deleteMessage: string = '';
+  deleteFailsMessage: string = '';
 
-  constructor(public authService: AuthService, private articleService: ArticleService) {}
+  constructor(public authService: AuthService, private articleService: ArticleService, private router: Router) {}
   ngOnInit(): void {
     this.loadArticles();
+  }
+
+  editArticle(id: string) {
+    this.router.navigate(['/articles/edit', id]);
   }
   
   loadArticles() {
@@ -27,7 +36,56 @@ export class ArticlesComponent implements OnInit{
     });
   }
 
+  togglePublish(id: string) {
+    this.articleService.publishArticle(id).subscribe({
+      next: () => {
+        const article = this.articles.find(a => a._id === id);
+        if (article) {
+          article.isPublished = !article.isPublished;
+        }
+        this.publishMessage = article.isPublished ? 'Published successfully' : 'Unpublished successfully';
+
+        setTimeout(() => {
+          this.publishMessage = '';
+        }, 3000);
+      },
+      error: err => {
+        console.error('Failed to publish article', err);
+        this.publishFailsMessage = 'Failed to update publish status';
+
+        setTimeout(() => {
+          this.publishFailsMessage = '';
+        }, 3000);
+      }
+    });
+  }
+
+  deleteArticle(id: string) {
+    this.articleService.deleteArticle(id).subscribe({
+      next: () => {
+        this.articles = this.articles.filter(a => a._id !== id);
+        this.deleteMessage = 'Deleted successfully';
+
+        setTimeout(() => {
+          this.deleteMessage = '';
+        }, 3000);
+      },
+      error: err => {
+        console.error('Failed to delete article', err);
+        this.deleteFailsMessage = 'Failed to delete article';
+
+        setTimeout(() => {
+          this.deleteFailsMessage = '';
+        }, 3000);
+      }
+    });
+  }
+
   noPublishedArticles(): boolean {
   return this.articles.length > 0 && !this.articles.some(a => a.isPublished);
+  }
+
+  noUnpublishedArticles(): boolean {
+    return this.articles.length > 0 && !this.articles.some(a => !a.isPublished);
   }
 }
