@@ -38,7 +38,8 @@ export class AuthService {
         this.router.navigate(['/dashboard']);
       })
   )}
-  getUser(): User | null {
+  
+  getUser(): any | null {
     return this.user;
   }
 

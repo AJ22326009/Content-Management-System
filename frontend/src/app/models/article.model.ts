@@ -3,6 +3,5 @@ export interface Article{
     title: string;
     body: string;
     isPublished?: boolean | false;
-    image?: string | null;
-    author: object;
+    imageUrl?: string | null;
 }

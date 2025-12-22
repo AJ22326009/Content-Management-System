@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth';
+import {Article} from '../../../models/article.model';
+import { ArticleService } from '../../../services/article';
 
 @Component({
   selector: 'app-articles.component',
@@ -7,29 +9,25 @@ import { AuthService } from '../../../services/auth';
   templateUrl: './articles.component.html',
   styleUrl: './articles.component.css',
 })
-export class ArticlesComponent {
+export class ArticlesComponent implements OnInit{
+  articles: Article[] = [];
+  loadingArticles: boolean = false;
+  errorLoadingArticles: string | null = null;
 
-  constructor(public authService: AuthService) {}
-    content="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et doloreLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et doloreLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et doloreLorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+  constructor(public authService: AuthService, private articleService: ArticleService) {}
+  ngOnInit(): void {
+    this.loadArticles();
+  }
+  
+  loadArticles() {
+    this.loadingArticles = true;
+    this.articleService.getArticles().subscribe({
+      next: (data: any) => { this.articles = data.articles; this.loadingArticles = false; this.errorLoadingArticles = null; },
+      error: err => { console.error('Failed to load articles', err); this.loadingArticles = false; this.errorLoadingArticles = 'Failed to load articles'; }
+    });
+  }
 
-  articles=[
-    {
-      title: 'First Article',
-      content:this.content,
-      imageLink:'https://github.com/AJ22326009/Admin-Dashboard/blob/main/src/assets/Algasim.jpg?raw=true',
-      published: true
-    },
-    {
-      title: 'second Article',
-      content:this.content,
-      imageLink:'https://github.com/AJ22326009/Admin-Dashboard/blob/main/src/assets/Algasim.jpg?raw=true',
-      published: true
-    },
-    {
-      title: 'Third Article',
-      content:this.content,
-      imageLink:'https://github.com/AJ22326009/Admin-Dashboard/blob/main/src/assets/Algasim.jpg?raw=true',
-      published: false
-    }
-  ]
+  noPublishedArticles(): boolean {
+  return this.articles.length > 0 && !this.articles.some(a => a.isPublished);
+  }
 }

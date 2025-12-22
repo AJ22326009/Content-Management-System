@@ -24,25 +24,38 @@
                 <div class="card-body">
                   <div class="form-group">
                     <label for="title">Article Title</label>
-                    <input type="text" class="form-control" id="title" placeholder="Enter title">
+                    <input type="text" class="form-control" [(ngModel)]="title"  name="title" id="title" placeholder="Enter title">
                   </div>
                   <div class="form-group">
-                    <label for="content">Article Content</label>
-                    <textarea class="form-control" id="content" placeholder="Enter content"></textarea>
+                    <label for="body">Article Content</label>
+                    <textarea class="form-control" [(ngModel)]="body" name="body" id="body" placeholder="Enter content"></textarea>
                   </div>
                     <div class="form-group">
-                    <label for="image">Image</label>
-                    <input type="text" class="form-control" id="image" placeholder="Enter image URL">
+                    <label for="imageUrl">Image</label>
+                    <input type="text" class="form-control" [(ngModel)]="imageUrl" name="imageUrl" id="imageUrl" placeholder="Enter image URL">
                   </div>  
                 </div>
                 <!-- /.card-body -->
                 <div class="card-footer d-flex justify-content-center">
-                  <button type="submit" class="btn btn-primary">Submit</button>
+                  <button type="submit" class="btn btn-primary" (click)="createArticle()">Submit</button>
                 </div>
               </form>
             </div>
             <!-- /.card -->
       </div>
     </section>
-    <!-- /.content -->
-  </div>
+
+    @if(success){
+      <div class="alert alert-success" role="alert" style="position: fixed; bottom: 20px; right: 20px;">
+        Created successfully!
+    </div>
+    }
+
+    @if(error){
+      <div class="alert alert-danger" role="alert" style="position: fixed; bottom: 20px; right: 20px;">
+        {{ error }}
+    </div>
+    }
+    
+
+</div>
