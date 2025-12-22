@@ -2,26 +2,42 @@ import { Injectable } from '@angular/core';
 import { User } from '../models/user.model';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
+import { Router } from '@angular/router';
+import { tap } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  user: any= null
+  constructor(private http: HttpClient, private router: Router) {}
 
-  constructor(private http: HttpClient) {}
-  private user: any= null
-  login(){this.user = {
-    fullname: 'Algasim Jallow',
-    email: 'algsim@utg',
-    imageUrl: 'https://github.com/AJ22326009/Admin-Dashboard/blob/main/src/assets/Algasim.jpg?raw=true',
-    role: {
-      name: 'Manager',
-      permissions: ['create_article', 'edit_article', 'delete_article','view_article','access_matrix','manage_users','view_permissions',
-        'view_roles', 'edit_role_permissions','publish_article'
-      ]
+  public restoreUserFromToken() {
+    const accessToken = localStorage.getItem('accessToken');
+    if(!accessToken) return;
+
+    try {
+      const decoded = jwtDecode<any>(accessToken);
+      this.user = decoded;
+    } catch (error) {
+      this.logout();
     }
   }
-}
+  
+  login(credentials: { email: string; password: string }) {
+
+    return this.http.post<any>(environment.loginUrl, credentials).pipe(
+      tap(res=>{
+        localStorage.setItem('accessToken', res.accessToken);
+        localStorage.setItem('refreshToken', res.refreshToken);
+        
+        const decoded=jwtDecode<any>(res.accessToken);
+        this.user=decoded;
+        
+        this.router.navigate(['/dashboard']);
+      })
+  )}
   getUser(): User | null {
     return this.user;
   }
@@ -31,7 +47,7 @@ export class AuthService {
   }
 
   hasPermission(permission: string): boolean {
-    return !!this.user?.role.permissions.includes(permission);
+    return this.user.permissions.includes(permission);
   }
 
   logout(){

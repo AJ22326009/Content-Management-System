@@ -22,7 +22,7 @@
                                 <td>{{permission.name}}</td>
                                 @for(role of roles; track role.name){
                                     <td>
-                                        {{ hasPermission(role, permission) ? '✔️' : '❌' }}
+                                        {{ isRoleHavingPermission(role, permission) ? '✔️' : '❌' }}
                                     </td>
                                 }
                             </tr>

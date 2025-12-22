@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { RoleService } from '../../services/role';
 import { PermissionService } from '../../services/permission';
-import { Role } from '../../models/role.model';
 import { Permission } from '../../models/permission.model';
 
 
@@ -43,7 +42,7 @@ export class AccessMatrixComponent implements OnInit {
     });
   }
 
-  hasPermission(role: any, permission: Permission): boolean {
+  isRoleHavingPermission(role: any, permission: Permission): boolean {
     return role.permissions.includes(permission._id);
   }
 }

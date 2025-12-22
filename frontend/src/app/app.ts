@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, NgModule, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from './components/sidebar.component/sidebar.component';
 import { AuthService } from './services/auth';
@@ -12,5 +12,7 @@ import { AuthService } from './services/auth';
 export class App {
   protected readonly title = signal('frontend');
 
-  constructor(public authService: AuthService) {}
+  constructor(public authService: AuthService) {
+    authService.restoreUserFromToken();
+  }
 }

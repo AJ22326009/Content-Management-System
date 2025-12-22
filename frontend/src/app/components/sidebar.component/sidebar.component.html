@@ -4,7 +4,7 @@
     <li class="nav-item d-none d-sm-inline-block">
       <a routerLink="/" class="nav-link">Home</a>
     </li>
-    @if(can('view_article')){
+    @if(can('view_articles')){
     <li class="nav-item d-none d-sm-inline-block">
       <a routerLink="/articles" class="nav-link">Articles</a>
     </li>
@@ -38,7 +38,7 @@
             <p>Dashboard</p>
           </a>
         </li>
-        @if(can('view_article')){
+        @if(can('view_articles')){
         <li class="nav-item">
           <a routerLink="/articles" class="nav-link">
             <i class="far fa-circle nav-icon"></i>
