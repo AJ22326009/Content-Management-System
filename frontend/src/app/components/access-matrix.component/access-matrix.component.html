@@ -34,6 +34,24 @@
                             <i class="fas fa-2x fa-sync-alt fa-spin"></i>
                         </div>
                     }
+
+                    @if(roleError && permissionError){
+                        <div class="text-danger m-3">
+                            Failed to load roles and permissions.
+                        </div>
+                    }@else {
+                        @if(roleError){
+                        <div class="text-danger m-3">
+                            {{ roleError }}
+                        </div>
+                        }
+                        @if(permissionError){
+                        <div class="text-danger m-3">
+                            {{ permissionError }}
+                        </div>
+                        }
+                    }
+                   
                 </div>
                 <!-- /.card-body -->
             </div>
