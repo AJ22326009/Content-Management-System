@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { RoleService } from '../../services/role';
-import { PermissionService } from '../../services/permission';
+import { RoleService } from '../../services/role/role';
+import { PermissionService } from '../../services/permission/permission';
 import { Permission } from '../../models/permission.model';
 
 
