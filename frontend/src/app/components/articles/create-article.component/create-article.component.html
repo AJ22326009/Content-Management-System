@@ -26,11 +26,32 @@
                     <label for="title">Article Title</label>
                     <input type="text" class="form-control" formControlName="title" id="title" placeholder="Enter title">
                   </div>
+                  <!-- title error notification -->
+                    @if(articleForm.get('title')?.invalid && articleForm.get('title')?.touched) {
+                        @if(articleForm.get('title')?.errors?.['required']){
+                             <div class="text-danger mb-3">
+                            Title is required.
+                        </div>
+                      }
+                    }
                   <div class="form-group">
                     <label for="body">Article Content</label>
                     <textarea class="form-control" formControlName="body" id="body" placeholder="Enter content"></textarea>
                   </div>
-                    <div class="form-group">
+                  <!-- body error notification -->
+                    @if(articleForm.get('body')?.invalid && articleForm.get('body')?.touched) {
+                        @if(articleForm.get('body')?.errors?.['required']){
+                             <div class="text-danger mb-3">
+                            Body is required.
+                        </div>
+                      }
+                        @if(articleForm.get('body')?.errors?.['minlength']){
+                             <div class="text-danger mb-3">
+                            Body must be at least 20 characters long.
+                        </div>
+                        }
+                    }
+                  <div class="form-group">
                     <label for="imageUrl">Image</label>
                     <input type="text" class="form-control" formControlName="imageUrl" id="imageUrl" placeholder="Enter image URL">
                   </div>  
