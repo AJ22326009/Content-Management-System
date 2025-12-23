@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ArticleService } from '../../../services/article';
-import {Article} from '../../../models/article.model';
 import { ReactiveFormsModule, FormGroup, Validators, FormBuilder} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -43,13 +42,11 @@ export class CreateArticleComponent implements OnInit {
   loadArticle() {
     this.articleService.getArticleById(this.articleId).subscribe(res=>{
       const article = res.article;
-      console.log('Raw Response: ', article);
       this.articleForm.patchValue({
         title: article.title,
         body: article.body,
         imageUrl: article.imageUrl
       });
-      console.log('Form After: ', this.articleForm.value);
     }
     )
   }
