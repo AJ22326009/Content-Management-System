@@ -24,4 +24,49 @@ const registerUser=async(req,res)=>{
     res.status(201).json({message:'user registered successfully', userId:user._id});
 }
 
-module.exports={registerUser};
+//delete user
+const deleteUser=async(req,res)=>{
+    const userId=req.params.id;
+
+    const user=await User.findByIdAndDelete(userId);
+    if(!user){
+        return res.status(404).json({message:'user not found'});
+    }
+    res.status(200).json({message:'user deleted successfully'});
+}
+
+//get a user by id
+const getUserById=async(req,res)=>{
+    const userId=req.params.id;
+
+    const user=await User.findById(userId).populate('role');
+    if(!user){
+        return res.status(404).json({message:'user not found'});
+    }
+    res.status(200).json({user});
+}
+
+//get all users
+const getAllUsers=async(req,res)=>{
+    const users=await User.find().populate('role');
+    if(users.length===0){
+        return res.status(404).json({message:'no users found'});
+    }
+
+    res.status(200).json({users});
+}
+
+//edit user
+const updateUser=async(req,res)=>{
+    const userId=req.params.id;
+    const updatedData=req.body;
+
+    const user=await User.findByIdAndUpdate(userId,updatedData,{new:true});
+
+    if(!user){
+        return res.status(404).json({message:'user not found'});
+    }
+    res.status(200).json({message:'user updated successfully', user});
+}
+
+module.exports={registerUser, deleteUser, getUserById, getAllUsers, updateUser};
