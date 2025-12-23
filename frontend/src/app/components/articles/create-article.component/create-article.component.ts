@@ -24,7 +24,7 @@ export class CreateArticleComponent implements OnInit {
     private fb: FormBuilder) {
       this.articleForm = this.fb.group({
         title: ['', Validators.required],
-        body: ['', Validators.required],
+        body: ['', [Validators.required, Validators.minLength(20)]],
         imageUrl: ['']
       });
     }
