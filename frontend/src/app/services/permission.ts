@@ -11,6 +11,6 @@ export class PermissionService {
    constructor(private http: HttpClient) {}
 
    getPermissions(): Observable<Permission[]> {
-    return this.http.get<Permission[]>(environment.permissionApiUrl);
+    return this.http.get<Permission[]>(`${environment.apiUrl}api/permissions`);
    }
 }

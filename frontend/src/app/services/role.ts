@@ -10,10 +10,10 @@ export class RoleService {
   constructor(private http: HttpClient) {}
 
   getRoles() {
-    return this.http.get<Role[]>(environment.roleApiUrl);
+    return this.http.get<Role[]>(`${environment.apiUrl}api/roles`);
   }
   
   updateRolePermissions(roleId: string, permissions: string[]) {
-    return this.http.put<Role>(`${environment.roleApiUrl}/${roleId}/permissions`, { permissions });
+    return this.http.put<Role>(`${environment.apiUrl}api/roles/${roleId}/permissions`, { permissions });
   }
 }

@@ -11,26 +11,26 @@ export class ArticleService {
   constructor(private http: HttpClient) {}
 
   getArticles(): Observable<Article[]> {
-    return this.http.get<Article[]>(environment.apiUrl);
+    return this.http.get<Article[]>(`${environment.apiUrl}api/articles`);
   }
 
   getArticleById(id: string): Observable<any> {
-    return this.http.get<Article>(`${environment.apiUrl}/${id}`);
+    return this.http.get<Article>(`${environment.apiUrl}api/articles/${id}`);
   }
 
   createArticle(article: Article): Observable<Article> {
-    return this.http.post<Article>(environment.apiUrl, article);
+    return this.http.post<Article>(`${environment.apiUrl}api/articles`, article);
   }
 
   updateArticle(id: string, article: Article): Observable<Article> {
-    return this.http.put<Article>(`${environment.apiUrl}/${id}`, article);
+    return this.http.put<Article>(`${environment.apiUrl}api/articles/${id}`, article);
   }
 
   deleteArticle(id: string): Observable<void> {
-    return this.http.delete<void>(`${environment.apiUrl}/${id}`);
+    return this.http.delete<void>(`${environment.apiUrl}api/articles/${id}`);
   }
 
   publishArticle(id: string): Observable<Article> {
-    return this.http.put<Article>(`${environment.apiUrl}/${id}/publish`, {});
+    return this.http.put<Article>(`${environment.apiUrl}api/articles/${id}/publish`, {});
   }
 }

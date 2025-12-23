@@ -27,7 +27,7 @@ export class AuthService {
   
   login(credentials: { email: string; password: string }) {
 
-    return this.http.post<any>(environment.loginUrl, credentials).pipe(
+    return this.http.post<any>(`${environment.apiUrl}api/auth/login`, credentials).pipe(
       tap(res=>{
         localStorage.setItem('accessToken', res.accessToken);
         localStorage.setItem('refreshToken', res.refreshToken);
@@ -54,7 +54,7 @@ export class AuthService {
   logout(){
     const refreshToken = localStorage.getItem('refreshToken');
     if (refreshToken) {
-      this.http.post(environment.logoutUrl, { refreshToken }).subscribe();
+      this.http.post(`${environment.apiUrl}api/auth/logout`, { refreshToken }).subscribe();
     }
 
     localStorage.removeItem('accessToken');
