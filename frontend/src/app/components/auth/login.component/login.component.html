@@ -8,26 +8,50 @@
             <div class="card-body login-card-body">
                 <p class="login-box-msg">Sign in to start your session</p>
 
-                <form>
+                <form [formGroup]="loginForm">
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control" [(ngModel)]="email" name="email" placeholder="Email">
+                        <input type="email" class="form-control" formControlName="email" name="email" placeholder="Email">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-envelope"></span>
                             </div>
                         </div>
                     </div>
+                    <!-- email error notification -->
+                    @if(loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+                        @if(loginForm.get('email')?.errors?.['required']){
+                             <div class="text-danger mb-3">
+                            Email is required.
+                        </div>
+                        }
+                       @if(loginForm.get('email')?.errors?.['email']){
+                         <div class="text-danger mb-3">
+                            Please enter a valid email address.
+                        </div>
+                       }
+                    }
+
+
                     <div class="input-group mb-3">
-                        <input type="password" class="form-control" [(ngModel)]="password" name="password" placeholder="Password">
+                        <input type="password" class="form-control" formControlName="password" name="password" placeholder="Password">
                         <div class="input-group-append">
                             <div class="input-group-text">
                                 <span class="fas fa-lock"></span>
                             </div>
                         </div>
                     </div>
+
+                    <!-- password error notification -->
+                    @if(loginForm.get('password')?.invalid && loginForm.get('password')?.touched) {
+                        @if(loginForm.get('password')?.errors?.['required']){
+                             <div class="text-danger mb-3">
+                            Password is required.
+                        </div>
+                        }
+                    }
                     <div class="row justify-content-center">
                         <div class="col-4">
-                            <button type="button" class="btn btn-primary btn-block" (click)="login()">Log In</button>
+                            <button type="button" class="btn btn-primary btn-block" (click)="login()" [disabled]="loginForm.invalid">Log In</button>
                         </div>
                     </div>
                 </form>
