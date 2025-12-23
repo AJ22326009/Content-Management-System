@@ -1,1 +1,49 @@
-<p>users works!</p>
+<div class="content-wrapper" style="display: flex; justify-content: space-evenly; align-items: center; flex-wrap: wrap; min-height: 100vh;">
+    @for(user of users; track user._id){
+        <!-- Profile Image -->
+    <div class="card card-primary card-outline" style="min-width: 350px;">
+        <div class="card-body box-profile">
+            <div class="text-center">
+                <img class="profile-user-img img-fluid img-circle" [src]="user.imageUrl"
+                    alt="User profile picture" style="height: 100px">
+            </div>
+
+            <h3 class="profile-username text-center">{{ user.fullname }}</h3>
+            <p class="text-muted text-center">{{ user.role.name }}</p>
+
+            <ul class="list-group list-group-unbordered mb-3">
+                <li class="list-group-item">
+                    <b>ID</b> <a class="float-right">{{ user._id }}</a>
+                </li>
+                <li class="list-group-item">
+                    <b>Email</b> <a class="float-right">{{ user.email }}</a>
+                </li>
+            </ul>
+<!--    to be used later-->
+        <div class="flex row m-2" style="justify-content: center;">
+            <a class="btn btn-primary m-2" style="width: 70px; font-weight: bold;" (click)="editUser(user._id)">Edit</a>
+            <a class="btn btn-danger m-2" style="width: 90px; font-weight: bold;" (click)="deleteUser(user._id)">Delete</a>
+        </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+    }
+
+    @if(loading) {
+        <div class="spinner-border text-primary" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    }
+
+    @if(error) {
+        <div class="alert alert-danger" role="alert" style="position: fixed; bottom: 20px; right: 20px;">
+            {{ error }}
+        </div>
+    }
+
+    @if(success) {
+        <div class="alert alert-success" role="alert" style="position: fixed; bottom: 20px; right: 20px;">
+            {{ success }}
+        </div>
+    }
+</div>
