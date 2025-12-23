@@ -61,6 +61,17 @@ const updateUser=async(req,res)=>{
     const userId=req.params.id;
     const updatedData=req.body;
 
+    updatedData.role=await Role.findOne({name:updatedData.role});
+    if(!updatedData.role){
+        return res.status(400).json({message:'role not found'});
+    }
+
+    if (updatedData.password && updatedData.password.trim() !== '') {
+        updatedData.password = await bcrypt.hash(updatedData.password, 10);
+    } else {
+        delete updatedData.password; 
+    }
+
     const user=await User.findByIdAndUpdate(userId,updatedData,{new:true});
 
     if(!user){
