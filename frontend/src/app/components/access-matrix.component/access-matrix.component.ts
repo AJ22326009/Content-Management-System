@@ -15,22 +15,22 @@ export class AccessMatrixComponent implements OnInit {
   permissions: Permission[] = [];
   loadingPermissions: boolean = false;
   loadingRoles: boolean = false;
-  error: string |null = null;
+  roleError: string | null = null;
+  permissionError: string | null = null;
+
 
   constructor(private roleService: RoleService, private permissionService: PermissionService) {}
 
   ngOnInit() {
     this.loadRoles();
     this.loadPermissions();
-    // console.log(this.roles);
-    // console.log(this.permissions);
   }
 
   loadRoles() {
     this.loadingRoles = true;
     this.roleService.getRoles().subscribe({
       next: (data: any)=>{this.roles = data.roles; this.loadingRoles = false;},
-      error: err=>{this.error = err?.message || 'failed to load roles'; this.loadingRoles = false;}
+      error: err=>{this.roleError = 'failed to load roles'; this.loadingRoles = false;}
     });
   }
 
@@ -38,7 +38,7 @@ export class AccessMatrixComponent implements OnInit {
     this.loadingPermissions = true;
     this.permissionService.getPermissions().subscribe({
       next: (data: any)=> { this.permissions = data.permissions; this.loadingPermissions = false;},
-      error: err => { this.error = err?.message || 'failed to load permissions'; this.loadingPermissions = false; }
+      error: err => { this.permissionError = 'failed to load permissions'; this.loadingPermissions = false; }
     });
   }
 
