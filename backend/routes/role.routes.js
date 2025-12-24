@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const {getAllRoles, updateRolePermissions} = require('../controllers/role.controller');
+const {getAllRoles, /*updateRolePermissions*/} = require('../controllers/role.controller');
 const authorize = require('../middleware/authorize');
 
 //get all roles
@@ -11,10 +11,10 @@ router.get('/',
 )
 
 
-//update role permissions
-router.put('/:id/permissions',
-    authorize('edit_role_permissions'),
-    updateRolePermissions
-);
+//update role permissions (not used currently)
+// router.put('/:id/permissions',
+//     authorize('edit_role_permissions'),
+//     updateRolePermissions
+// );
 
 module.exports = router;

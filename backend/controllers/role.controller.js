@@ -10,20 +10,21 @@ const getAllRoles= async (req, res) => {
     }
 }
 
-const updateRolePermissions= async (req, res) => {
-    try {
-        const roleId= req.params.id;
-        const {permissions}= req.body;
-        const updatedRole= await role.findByIdAndUpdate(roleId, {permissions}, {new: true});
-        if(!updatedRole){
-            return res.status(404).json({message: 'role not found'});
-        }
+//not used currently
+// const updateRolePermissions= async (req, res) => {
+//     try {
+//         const roleId= req.params.id;
+//         const {permissions}= req.body;
+//         const updatedRole= await role.findByIdAndUpdate(roleId, {permissions}, {new: true});
+//         if(!updatedRole){
+//             return res.status(404).json({message: 'role not found'});
+//         }
 
-        res.status(200).json({message: 'role updated successfully', role: updatedRole});
-    } catch (error) {
-        res.status(400).json({message: 'error updating role', error: error.message});
-    }
-}
+//         res.status(200).json({message: 'role updated successfully', role: updatedRole});
+//     } catch (error) {
+//         res.status(400).json({message: 'error updating role', error: error.message});
+//     }
+// }
 
 
-module.exports= {getAllRoles, updateRolePermissions};
+module.exports= {getAllRoles, /*updateRolePermissions*/};
