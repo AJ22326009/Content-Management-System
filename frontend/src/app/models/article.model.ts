@@ -5,4 +5,5 @@ export interface Article{
     isPublished?: boolean | false;
     imageUrl?: string | null;
     author?: {fullname: string, email: string, _id: string} | null;
+    authorName?: string;
 }
