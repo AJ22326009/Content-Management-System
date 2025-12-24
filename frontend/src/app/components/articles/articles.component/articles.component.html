@@ -31,7 +31,7 @@
                         <a class="btn btn-danger m-2" style="width: 100px;" (click)="deleteArticle(article._id)">{{deleteId === article._id ? 'Loading...' : 'Delete'}}</a>
                     }
                 </div>
-                <em style="color: rgb(58, 98, 217); margin-bottom: 0; margin-left: 10px;">Created by {{ article.author?.fullname}}</em>
+                <em style="color: rgb(58, 98, 217); margin-bottom: 0; margin-left: 10px;">Created by {{ article.authorName }}</em>
                <em class="" style="color: rgb(94, 123, 210); margin-top: 0; margin-left: 10px;">last updated {{ article.updatedAt | date:'short' }}</em>
             </div>
             }
@@ -74,7 +74,7 @@
                         <a class="btn btn-danger m-2" style="width: 100px;" (click)="deleteArticle(article._id)">{{deleteId === article._id ? 'Loading...' : 'Delete'}}</a>
                     }
                 </div>
-               <em style="color: rgb(58, 98, 217); margin-bottom: 0; margin-left: 10px;">Created by {{ article.author?.fullname}}</em>
+               <em style="color: rgb(58, 98, 217); margin-bottom: 0; margin-left: 10px;">Created by {{ article.authorName }}</em>
                <em class="" style="color: rgb(94, 123, 210); margin-top: 0; margin-left: 10px;">last updated {{ article.updatedAt | date:'short' }}</em>
             </div>
             } 
