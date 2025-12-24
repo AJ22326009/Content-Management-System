@@ -25,10 +25,10 @@
                         <a class="btn btn-primary m-2" style="width: 70px; font-weight: bold;" (click)="editArticle(article._id)">Edit</a>
                     }
                      @if(authService.hasPermission('publish_article')){
-                        <a class="btn btn-success m-2" style="width: 100px;" (click)="togglePublish(article._id)">Unpublish</a>
+                        <a class="btn btn-success m-2" style="width: 100px;" (click)="togglePublish(article._id)">{{publishId === article._id ? 'Loading...' : 'Unpublish'}}</a>
                     }
                      @if(authService.hasPermission('delete_article')){
-                        <a class="btn btn-danger m-2" style="width: 100px;" (click)="deleteArticle(article._id)">Delete</a>
+                        <a class="btn btn-danger m-2" style="width: 100px;" (click)="deleteArticle(article._id)">{{deleteId === article._id ? 'Loading...' : 'Delete'}}</a>
                     }
                 </div>
                 <em style="color: rgb(58, 98, 217); margin-bottom: 0; margin-left: 10px;">Created by {{ article.author?.fullname}}</em>
@@ -68,10 +68,10 @@
                         <a class="btn btn-primary m-2" style="width: 70px; font-weight: bold;" (click)="editArticle(article._id)">Edit</a>
                     }
                     @if(authService.hasPermission('publish_article')){
-                        <a class="btn btn-success m-2" style="width: 100px;" (click)="togglePublish(article._id)">Publish</a>
+                        <a class="btn btn-success m-2" style="width: 100px;" (click)="togglePublish(article._id)">{{publishId === article._id ? 'Loading...' : 'Publish'}}</a>
                     }
                     @if(authService.hasPermission('delete_article')){
-                        <a class="btn btn-danger m-2" style="width: 100px;" (click)="deleteArticle(article._id)">Delete</a>
+                        <a class="btn btn-danger m-2" style="width: 100px;" (click)="deleteArticle(article._id)">{{deleteId === article._id ? 'Loading...' : 'Delete'}}</a>
                     }
                 </div>
                <em style="color: rgb(58, 98, 217); margin-bottom: 0; margin-left: 10px;">Created by {{ article.author?.fullname}}</em>

@@ -13,6 +13,7 @@ export class LoginComponent{
   email: string = '';
   password: string = '';
   loginForm: FormGroup;
+  loading: boolean = false;
  
 constructor(private authService: AuthService, private router: Router, private fb: FormBuilder) {
     this.loginForm = this.fb.group({
@@ -22,12 +23,15 @@ constructor(private authService: AuthService, private router: Router, private fb
 }
 
   login() {
+    this.loading = true;
     this.authService.login({email: this.loginForm.value.email, password: this.loginForm.value.password}).subscribe({
       next: (res) => {
         // Successful login handled in AuthService
+        this.loading = false;
       },
       error: (err) => {
         alert('Login failed: ' + err.error.message);
+        this.loading = false;
       }
     })
   }

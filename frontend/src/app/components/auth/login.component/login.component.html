@@ -51,7 +51,7 @@
                     }
                     <div class="row justify-content-center">
                         <div class="col-4">
-                            <button type="button" class="btn btn-primary btn-block" (click)="login()" [disabled]="loginForm.invalid">Log In</button>
+                            <button type="button" class="btn btn-primary btn-block" (click)="login()" [disabled]="loginForm.invalid || loading">Log In</button>
                         </div>
                     </div>
                 </form>

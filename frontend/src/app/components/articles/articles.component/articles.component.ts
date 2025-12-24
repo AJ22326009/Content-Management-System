@@ -19,6 +19,9 @@ export class ArticlesComponent implements OnInit{
   deleteMessage: string = '';
   deleteFailsMessage: string = '';
 
+  publishId: string|null = null;
+  deleteId: string| null = null;
+
   constructor(public authService: AuthService, private articleService: ArticleService, private router: Router) {}
   ngOnInit(): void {
     this.loadArticles();
@@ -37,8 +40,10 @@ export class ArticlesComponent implements OnInit{
   }
 
   togglePublish(id: string) {
+    this.publishId=id;
     this.articleService.publishArticle(id).subscribe({
       next: () => {
+        this.publishId = null;
         const article = this.articles.find(a => a._id === id);
         if (article) {
           article.isPublished = !article.isPublished;
@@ -50,6 +55,7 @@ export class ArticlesComponent implements OnInit{
         }, 3000);
       },
       error: err => {
+        this.publishId = null;
         console.error('Failed to publish article', err);
         this.publishFailsMessage = 'Failed to update publish status';
 
@@ -61,8 +67,10 @@ export class ArticlesComponent implements OnInit{
   }
 
   deleteArticle(id: string) {
+    this.deleteId=id;
     this.articleService.deleteArticle(id).subscribe({
       next: () => {
+        this.deleteId = null;
         this.articles = this.articles.filter(a => a._id !== id);
         this.deleteMessage = 'Deleted successfully';
 
@@ -71,6 +79,7 @@ export class ArticlesComponent implements OnInit{
         }, 3000);
       },
       error: err => {
+        this.deleteId = null;
         console.error('Failed to delete article', err);
         this.deleteFailsMessage = 'Failed to delete article';
 

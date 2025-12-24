@@ -20,6 +20,8 @@ export class CreateEditUser implements OnInit{
   success: string = '';
   error: string = '';
 
+  loading: boolean = false;
+
   constructor(private fb: FormBuilder,
     private userService: UserService, private route: ActivatedRoute, private router: Router) {
 
@@ -57,12 +59,14 @@ export class CreateEditUser implements OnInit{
   }
 
   createUser() {
+    this.loading = true;
     if(this.userForm.invalid) {
       return;
     }
     
     this.userService.registerUser(this.userForm.value).subscribe({
       next: (user) => {
+        this.loading = false;
         console.log('User created successfully:', user);
         this.userForm.reset();
 
@@ -74,6 +78,7 @@ export class CreateEditUser implements OnInit{
         this.router.navigate(['/users']);
       },
       error: (err) => {
+        this.loading = false;
         this.error = 'Error creating user';
         setTimeout(() => {
           this.error = '';
@@ -83,12 +88,14 @@ export class CreateEditUser implements OnInit{
   }
 
   updateUser(userId: string) {
+    this.loading = true;
     if(this.userForm.invalid) {
       return;
     }
 
     this.userService.updateUser(userId, this.userForm.value).subscribe({
       next: (user) => {
+        this.loading = false;
         this.success = 'User updated successfully';
         setTimeout(() => {
           this.success = '';
@@ -97,6 +104,7 @@ export class CreateEditUser implements OnInit{
         this.router.navigate(['/users']);
       },
       error: (err) => {
+        this.loading = false;
         this.error = 'Error updating user';
         setTimeout(() => {
           this.error = '';

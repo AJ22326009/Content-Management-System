@@ -17,6 +17,8 @@ export class CreateArticleComponent implements OnInit {
   articleId!: string;
   articleForm!: FormGroup;
 
+  loading: boolean = false;
+
   constructor(
     private articleService: ArticleService, 
     private route: ActivatedRoute,
@@ -59,12 +61,14 @@ export class CreateArticleComponent implements OnInit {
     }
   }
   createArticle() {
+    this.loading = true;
     if(this.articleForm.invalid){
       return;
     }
 
     this.articleService.createArticle(this.articleForm.value).subscribe({
       next: () => {
+        this.loading = false;
         this.success = true;
         this.articleForm.reset();
 
@@ -75,6 +79,7 @@ export class CreateArticleComponent implements OnInit {
     
       },
       error: (err) => {
+        this.loading = false;
         this.error = 'Failed to create article';
 
         setTimeout(() => { this.error = null; }, 5000);
@@ -84,7 +89,9 @@ export class CreateArticleComponent implements OnInit {
   }
 
   updateArticle() {
+    this.loading = true;
     this.articleService.updateArticle(this.articleId, this.articleForm.value).subscribe(()=>{
+      this.loading = false;
       this.router.navigate(['/articles']);
     })
   }

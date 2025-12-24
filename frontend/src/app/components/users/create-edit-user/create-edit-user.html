@@ -100,7 +100,7 @@
                 </div>
               
                 <div class="card-footer d-flex justify-content-center">
-                  <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid">
+                  <button type="submit" class="btn btn-primary" [disabled]="userForm.invalid || loading">
                     {{ isEditMode ? 'Update User' : 'Create User' }}
                   </button>
                 </div>

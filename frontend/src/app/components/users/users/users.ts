@@ -13,6 +13,7 @@ export class Users implements OnInit {
   loading: boolean = false;
   error: string = '';
   success: string = '';
+  deletingUserId: string | null = null;
 
 
   constructor(private userService: UserService, private router: Router) {
@@ -45,9 +46,11 @@ export class Users implements OnInit {
   }
 
   deleteUser(id: string) {
+    this.deletingUserId = id;
     if(confirm("Are you sure you want to delete this user?")){
       this.userService.deleteUser(id).subscribe({
         next: () => {
+          this.deletingUserId = null;
           this.users = this.users.filter(user => user._id !== id);
           this.success = 'User deleted successfully';
           setTimeout(() => {
@@ -55,6 +58,7 @@ export class Users implements OnInit {
           }, 3000);
         },
         error: (err) => {
+          this.deletingUserId = null;
           this.error = 'Error deleting user';
           setTimeout(() => {
             this.error = '';

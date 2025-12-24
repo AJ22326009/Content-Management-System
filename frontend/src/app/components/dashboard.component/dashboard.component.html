@@ -2,6 +2,7 @@
     <!-- Content Header (Page header) -->
     <div class="content-header container-fluid m-3">
         <h1 class="m-0">Welcome <span>{{ authService.getUser()?.fullname }}</span> to the Dashboard</h1>
+        <em>Role: {{ authService.getUser()?.role }}</em>
     </div>
     <!-- /.content-header -->
 
@@ -14,7 +15,7 @@
             <!-- small box -->
             <div class="small-box bg-info">
               <div class="inner">
-                <h3>150</h3>
+                <h3>{{ publishedArticlesCount + draftArticlesCount }}</h3>
 
                 <p>Total Articles</p>
               </div>
@@ -25,7 +26,7 @@
             <!-- small box -->
             <div class="small-box bg-success">
               <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <h3>{{ publishedArticlesCount }}</h3>
 
                 <p>Published Articles</p>
               </div>
@@ -36,7 +37,7 @@
             <!-- small box -->
             <div class="small-box bg-warning">
               <div class="inner">
-                <h3>44</h3>
+                <h3>{{ draftArticlesCount }}</h3>
 
                 <p>Draft Articles</p>
               </div>
