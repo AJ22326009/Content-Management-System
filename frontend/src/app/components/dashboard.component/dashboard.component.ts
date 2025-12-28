@@ -21,7 +21,6 @@ export class DashboardComponent {
   countPublishedAndDraftArticles() {
     this.articleService.getArticles().subscribe((data: any) => {
       const articles: any[] = data.articles;
-      console.log(articles);
       this.publishedArticlesCount = articles.filter(article => article.isPublished).length;
       this.draftArticlesCount = articles.filter(article => !article.isPublished).length;
     });
