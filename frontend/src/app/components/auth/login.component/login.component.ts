@@ -14,6 +14,7 @@ export class LoginComponent{
   password: string = '';
   loginForm: FormGroup;
   loading: boolean = false;
+  error: string|null = null;
  
 constructor(private authService: AuthService, private router: Router, private fb: FormBuilder) {
     this.loginForm = this.fb.group({
@@ -30,8 +31,14 @@ constructor(private authService: AuthService, private router: Router, private fb
         this.loading = false;
       },
       error: (err) => {
-        alert('Login failed: ' + err.error.message);
+        this.error = err.error.message || 'An error occurred during login.';
+
         this.loading = false;
+        setTimeout(() => {
+          this.error = null;
+        }, 4000);
+        
+        this.loginForm.reset();
       }
     })
   }
