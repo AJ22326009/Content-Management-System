@@ -48,7 +48,9 @@
             <!-- small box -->
             <div class="small-box bg d-flex flex-column align-items-center">
               <a routerLink="/articles" class="btn btn-primary m-2">View Articles</a>
-              <a routerLink="/articles/create" class="btn btn-primary m-2">Create Article</a>
+              @if(authService.hasPermission('create_article')) {
+                <a routerLink="/articles/create" class="btn btn-primary m-2">Create Article</a>
+              }
             </div>
           </div>
           <!-- ./col -->
