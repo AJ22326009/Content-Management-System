@@ -22,7 +22,9 @@
 <!--    to be used later-->
         <div class="flex row m-2" style="justify-content: center;">
             <a class="btn btn-primary m-2" style="width: 70px; font-weight: bold;" (click)="editUser(user._id)">Edit</a>
-            <a class="btn btn-danger m-2" style="width: 90px; font-weight: bold;" (click)="deleteUser(user._id) ">{{deletingUserId === user._id ? 'Deleting...' : 'Delete'}}</a>
+            @if(user.role.name !== 'Super Admin'){
+                <a class="btn btn-danger m-2" style="width: 90px; font-weight: bold;" (click)="deleteUser(user._id) ">{{deletingUserId === user._id ? 'Deleting...' : 'Delete'}}</a>
+            }
         </div>
         </div>
         <!-- /.card-body -->
