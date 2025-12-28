@@ -1,38 +1,46 @@
-<div class="card-body content-wrapper" style="display: flex; flex-direction: column; align-items: center;">
+<div class="card-body content-wrapper" style="display: flex; flex-direction:column">
     <div class="flex align-items">
         @if(authService.hasPermission('publish_article')){
             <h3 class="" style="text-align: center; margin: 20px 0;">Published Articles</h3>
         }
         @for(article of articles; track article.title){
             @if(article.isPublished){
-            <div class="card bg-light d-flex flex-fill" style="margin-bottom: 50px;">
-                <div class="card-header text-muted border-bottom-0">
+            <div class="card bg-light" style="margin-bottom: 50px; display: flex; flex-direction: column; padding: 10px;">
+                <h5 class="card-header text-muted border-bottom-0">
                     {{ article.title }}
-                </div>
-                <div class="card-body pt-0">
-                    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;">
-                        <div class="col-7" style="width: 100%;">
-                            {{ article.body }}
-                        </div>
-                        <div class="col-5 text-center" style="width: 50%; max-width: 250px; min-width: 200px;">
-                            <img [src]="article.imageUrl" alt="Article img" class="rounded-lg border-primary img-fluid"
-                                style="border: aqua 1px solid; width: 100%;">
-                        </div>
+                </h5>
+                <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-left: 30px;">
+                    <div style="width: min(90vw, 750px); margin-bottom: 10px;">
+                        {{ article.body }}
+                    </div>
+                    <div class="text-center" style="width: 50%; max-width: 250px; min-width: 200px;">
+                        <img [src]="article.imageUrl" alt="Article img" class="rounded-lg border-primary img-fluid"
+                            style="border: aqua 1px solid; width: 100%;">
                     </div>
                 </div>
-                <div class="flex row m-2" style="justify-content: flex-end;">
-                    @if(authService.hasPermission('edit_article')){
-                        <a class="btn btn-primary m-2" style="width: 70px; font-weight: bold;" (click)="editArticle(article._id)">Edit</a>
-                    }
-                     @if(authService.hasPermission('publish_article')){
-                        <a class="btn btn-success m-2" style="width: 100px;" (click)="togglePublish(article._id)">{{publishId === article._id ? 'Loading...' : 'Unpublish'}}</a>
-                    }
-                     @if(authService.hasPermission('delete_article')){
-                        <a class="btn btn-danger m-2" style="width: 100px;" (click)="deleteArticle(article._id)">{{deleteId === article._id ? 'Loading...' : 'Delete'}}</a>
-                    }
-                </div>
-                <em style="color: rgb(58, 98, 217); margin-bottom: 0; margin-left: 10px;">Created by {{ article.authorName }}</em>
-               <em class="" style="color: rgb(94, 123, 210); margin-top: 0; margin-left: 10px;">last updated {{ article.updatedAt | date:'short' }}</em>
+
+                <div style=" display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                    <div class="flex m-2" style="justify-content: flex-start; flex-direction: column;">
+                        <em style="color: rgb(58, 98, 217); margin-bottom: 0; margin-left: 10px; display: block;">Created by {{
+                            article.authorName }}</em>
+                        <em class="" style="color: rgb(94, 123, 210); margin-top: 0; margin-left: 10px;">last updated {{
+                            article.updatedAt | date:'short' }}</em>
+                    </div>
+                    <div class="flex row m-2" style="justify-content: flex-end;">
+                        @if(authService.hasPermission('edit_article')){
+                        <a class="btn btn-primary m-2" style="width: 70px; font-weight: bold;"
+                            (click)="editArticle(article._id)">Edit</a>
+                        }
+                        @if(authService.hasPermission('publish_article')){
+                        <a class="btn btn-success m-2" style="width: 100px;" (click)="togglePublish(article._id)">{{publishId ===
+                            article._id ? 'Loading...' : 'Unpublish'}}</a>
+                        }
+                        @if(authService.hasPermission('delete_article')){
+                        <a class="btn btn-danger m-2" style="width: 100px;" (click)="deleteArticle(article._id)">{{deleteId ===
+                            article._id ? 'Loading...' : 'Delete'}}</a>
+                        }
+                    </div>
+                </div> 
             </div>
             }
             
@@ -48,34 +56,42 @@
         <h3 class="" style="text-align: center; margin: 20px 0;">Unpublished Articles</h3>
          @for(article of articles; track article.title){
             @if(!article.isPublished){
-            <div class="card bg-light d-flex flex-fill">
-                <div class="card-header text-muted border-bottom-0">
+            <div class="card bg-light" style="margin-bottom: 50px; display: flex; flex-direction: column; padding: 10px;">
+                <h5 class="card-header text-muted border-bottom-0">
                     {{ article.title }}
-                </div>
-                <div class="card-body pt-0">
-                    <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between;">
-                        <div class="col-7" style="width: 100%;">
-                            {{ article.body }}
-                        </div>
-                        <div class="col-5 text-center" style="width: 50%; max-width: 250px; min-width: 200px;">
-                            <img [src]="article.imageUrl" alt="Article img" class="rounded-lg border-primary img-fluid"
-                                style="border: aqua 1px solid; width: 100%;">
-                        </div>
+                </h5>
+                <div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-left: 30px;">
+                    <div style="width: min(90vw, 750px); margin-bottom: 10px;">
+                        {{ article.body }}
+                    </div>
+                    <div class="text-center" style="width: 50%; max-width: 250px; min-width: 200px;">
+                        <img [src]="article.imageUrl" alt="Article img" class="rounded-lg border-primary img-fluid"
+                            style="border: aqua 1px solid; width: 100%;">
                     </div>
                 </div>
-                <div class="flex row m-2" style="justify-content: flex-end;">
-                    @if(authService.hasPermission('edit_article')){
-                        <a class="btn btn-primary m-2" style="width: 70px; font-weight: bold;" (click)="editArticle(article._id)">Edit</a>
-                    }
-                    @if(authService.hasPermission('publish_article')){
-                        <a class="btn btn-success m-2" style="width: 100px;" (click)="togglePublish(article._id)">{{publishId === article._id ? 'Loading...' : 'Publish'}}</a>
-                    }
-                    @if(authService.hasPermission('delete_article')){
-                        <a class="btn btn-danger m-2" style="width: 100px;" (click)="deleteArticle(article._id)">{{deleteId === article._id ? 'Loading...' : 'Delete'}}</a>
-                    }
-                </div>
-               <em style="color: rgb(58, 98, 217); margin-bottom: 0; margin-left: 10px;">Created by {{ article.authorName }}</em>
-               <em class="" style="color: rgb(94, 123, 210); margin-top: 0; margin-left: 10px;">last updated {{ article.updatedAt | date:'short' }}</em>
+
+                <div style=" display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                    <div class="flex m-2" style="justify-content: flex-start; flex-direction: column;">
+                        <em style="color: rgb(58, 98, 217); margin-bottom: 0; margin-left: 10px; display: block;">Created by {{
+                            article.authorName }}</em>
+                        <em class="" style="color: rgb(94, 123, 210); margin-top: 0; margin-left: 10px;">last updated {{
+                            article.updatedAt | date:'short' }}</em>
+                    </div>
+                    <div class="flex row m-2" style="justify-content: flex-end;">
+                        @if(authService.hasPermission('edit_article')){
+                        <a class="btn btn-primary m-2" style="width: 70px; font-weight: bold;"
+                            (click)="editArticle(article._id)">Edit</a>
+                        }
+                        @if(authService.hasPermission('publish_article')){
+                        <a class="btn btn-success m-2" style="width: 100px;" (click)="togglePublish(article._id)">{{publishId ===
+                            article._id ? 'Loading...' : 'Unpublish'}}</a>
+                        }
+                        @if(authService.hasPermission('delete_article')){
+                        <a class="btn btn-danger m-2" style="width: 100px;" (click)="deleteArticle(article._id)">{{deleteId ===
+                            article._id ? 'Loading...' : 'Delete'}}</a>
+                        }
+                    </div>
+                </div> 
             </div>
             } 
         }
