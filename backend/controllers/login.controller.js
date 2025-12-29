@@ -31,7 +31,7 @@ const loginUser = async(req,res)=>{
             imageUrl: user.imageUrl
         },
         process.env.JWT_SECRET,
-        {expiresIn:'15m'}
+        {expiresIn:'1m'}
     );
 
     const refreshToken=jwt.sign(

@@ -33,7 +33,7 @@ const refreshUser = async(req,res)=>{
                 imageUrl: user.imageUrl
             },
             process.env.JWT_SECRET,
-            {expiresIn:'15m'}
+            {expiresIn:'1m'}
         );
 
         res.status(200).json({accessToken:newAccessToken});
