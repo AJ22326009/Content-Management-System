@@ -26,9 +26,11 @@ const refreshUser = async(req,res)=>{
 
         const newAccessToken=jwt.sign(
             {
+                fullname: user.fullname,
                 userId: user._id,
-                read: user.role.name,
-                permissions: user.role.permissions.map(permission => permission.name)
+                role: user.role.name,
+                permissions: user.role.permissions.map(permission => permission.name),
+                imageUrl: user.imageUrl
             },
             process.env.JWT_SECRET,
             {expiresIn:'15m'}
