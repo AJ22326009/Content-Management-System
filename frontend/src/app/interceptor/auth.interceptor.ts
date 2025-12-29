@@ -1,7 +1,7 @@
 import {HttpErrorResponse, HttpInterceptorFn} from '@angular/common/http';
 import {inject} from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, throwError } from 'rxjs';
+import { catchError, switchMap, throwError } from 'rxjs';
 import { AuthService } from '../services/auth/auth';
 
 export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
@@ -20,8 +20,26 @@ export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
         catchError((error: HttpErrorResponse) => {
             // case 1: token expired / invalid
             if (error.status === 401) {
-                authService.logout();
-                router.navigate(['/login']);
+
+                //token expired, try to refresh
+                return authService.refresh().pipe(
+                    switchMap((res: any) => {
+                        localStorage.setItem('accessToken', res.accessToken);
+
+                        const retryReq = req.clone({
+                            setHeaders: { Authorization: `Bearer ${res.accessToken}` }
+                        });
+
+                        return next(retryReq);
+                    }),
+
+                    //if refresh token is also expired, logout 
+                    catchError((refreshErr) => {
+                        authService.logout();
+                        router.navigate(['/login']);
+                        return throwError(() => refreshErr);
+                    })
+                );
             }
 
             // case 2: No internet / server down
