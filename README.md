@@ -14,7 +14,8 @@ This is a mid-term project for my Web2 course (lecturer: Mr. Pa Sulay Jobe). It 
 - Protected Routes & UI
 - Both access and refresh token used
 - access token expires in 15 mins
-- Auto logout on token expiry
+- refresh token expires in 7 days
+- On access token expiry, browser refresh will create a new access token (provided the refresh token is not expired)
 
 ## Tech Stack
 Frontend: Angular  
