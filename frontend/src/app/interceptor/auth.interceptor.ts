@@ -18,8 +18,9 @@ export const AuthInterceptor: HttpInterceptorFn = (req, next) => {
     }
     return next(req).pipe(
         catchError((error: HttpErrorResponse) => {
+            const isLoginReq = req.url.includes('/api/auth/login');
             // case 1: token expired / invalid
-            if (error.status === 401) {
+            if (error.status === 401 && !isLoginReq) {
 
                 //token expired, try to refresh
                 return authService.refresh().pipe(
