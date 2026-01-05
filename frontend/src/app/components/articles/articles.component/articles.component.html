@@ -84,7 +84,7 @@
                         }
                         @if(authService.hasPermission('publish_article')){
                         <a class="btn btn-success m-2" style="width: 100px;" (click)="togglePublish(article._id)">{{publishId ===
-                            article._id ? 'Loading...' : 'Unpublish'}}</a>
+                            article._id ? 'Loading...' : 'Publish'}}</a>
                         }
                         @if(authService.hasPermission('delete_article')){
                         <a class="btn btn-danger m-2" style="width: 100px;" (click)="deleteArticle(article._id)">{{deleteId ===
